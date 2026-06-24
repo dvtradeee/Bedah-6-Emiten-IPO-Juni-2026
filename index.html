@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📊 Bedah IPO 2026 - PRDL JELI EMMI JECX RANS BACH</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <style>
+        :root {
+            --bg: #f8f9fa;
+            --text: #333;
+            --card: white;
+            --border: #ddd;
+        }
+        [data-theme="dark"] {
+            --bg: #0f172a;
+            --text: #e2e8f0;
+            --card: #1e2937;
+            --border: #334155;
+        }
+        body { 
+            font-family: 'Segoe UI', Arial, sans-serif; 
+            margin: 20px; 
+            background: var(--bg); 
+            color: var(--text); 
+            line-height: 1.6; 
+            transition: background 0.3s;
+        }
+        h1, h2 { color: #3b82f6; }
+        .section { 
+            margin-bottom: 50px; 
+            padding: 25px; 
+            background: var(--card); 
+            border-radius: 12px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
+            border: 1px solid var(--border);
+        }
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin: 20px 0; 
+        }
+        th, td { 
+            padding: 12px; 
+            text-align: left; 
+            border-bottom: 1px solid var(--border); 
+        }
+        th { 
+            background: #1e40af; 
+            color: white; 
+            cursor: pointer; 
+        }
+        tr:hover { background: #33415533; }
+        canvas { max-height: 420px; margin: 20px 0; }
+        .toggle { position: fixed; top: 20px; right: 20px; z-index: 100; }
+        .highlight { background: #fef3c7; padding: 2px 6px; border-radius: 4px; font-weight: bold; }
+    </style>
+</head>
+<body data-theme="light">
+    <div class="toggle">
+        <button onclick="toggleTheme()" style="padding:10px 16px; border-radius:8px; background:#1e40af; color:white; border:none; cursor:pointer;">
+            🌙 Dark Mode
+        </button>
+    </div>
+
+    <h1>📊 Bedah 6 Emiten IPO Juni 2026 - DVTRADE</h1>
+    <p><strong>Data aktual dari Prospektus (Juni 2026)</strong></p>
+
+    <!-- Tabel Interaktif Utama -->
+    <div class="section">
+        <h2>Ringkasan Keuangan</h2>
+        <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Cari emiten..." style="padding:10px; width:100%; margin-bottom:15px; border-radius:6px;">
+        <table id="mainTable">
+            <thead>
+                <tr>
+                    <th onclick="sortTable(0)">Emiten</th>
+                    <th onclick="sortTable(1)">Revenue 2025 (Rp M)</th>
+                    <th onclick="sortTable(2)">Rev Growth YoY</th>
+                    <th onclick="sortTable(3)">Net Income 2025 (Rp M)</th>
+                    <th onclick="sortTable(4)">NI Growth YoY</th>
+                    <th onclick="sortTable(5)">P/E Ratio</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><strong>PRDL</strong></td><td>74,371</td><td>+26.8%</td><td>16,989</td><td>+69.9%</td><td>10.3x-12.3x</td></tr>
+                <tr><td><strong>JELI</strong></td><td>753,051</td><td>-4.5%</td><td>39,000</td><td>+235.5%</td><td>31x-38x</td></tr>
+                <tr><td><strong>EMMI</strong></td><td>454,636</td><td>+18.1%</td><td>32,400</td><td>+188.2%</td><td>Sedang-Premium</td></tr>
+                <tr><td><strong>JECX</strong></td><td>926,800</td><td>+4-16%</td><td>72,800</td><td>Stabil</td><td>53x-63x</td></tr>
+                <tr><td><strong>RANS</strong></td><td>353,000</td><td>-14%</td><td>56,700</td><td>-42%</td><td>Tinggi</td></tr>
+                <tr><td><strong>BACH</strong></td><td>1,730,000</td><td>Tumbuh</td><td>155,600</td><td>Solid</td><td>10.5x-13.1x</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Growth % Chart -->
+    <div class="section">
+        <h2>📈 Perbandingan Growth % YoY (2024 → 2025)</h2>
+        <canvas id="growthChart"></canvas>
+    </div>
+
+    <!-- Revenue Chart -->
+    <div class="section">
+        <h2>Revenue 2023-2025 Trend</h2>
+        <canvas id="revenueChart"></canvas>
+    </div>
+
+    <!-- Net Income Chart -->
+    <div class="section">
+        <h2>Net Income 2025</h2>
+        <canvas id="netIncomeChart"></canvas>
+    </div>
+
+    <!-- P/E -->
+    <div class="section">
+        <h2>Valuasi P/E Ratio</h2>
+        <canvas id="peChart"></canvas>
+    </div>
+
+    <!-- Kesimpulan -->
+    <div class="section">
+        <h2>Kesimpulan</h2>
+        <ul>
+            <li><strong>Paling Solid (Pengendali + Valuasi):</strong> $PRDL & $BACH</li>
+            <li><strong>Growth Profit Terbaik:</strong> $JELI & $EMMI</li>
+            <li><strong>Valuasi Termurah:</strong> $PRDL & $BACH</li>
+            <li><strong>Risiko Tertinggi:</strong> $RANS (revenue & profit turun)</li>
+        </ul>
+        <p><strong>Prioritas $PRDL → $BACH → $JELI</strong> </p>
+        <p><em>Tetap DYOR! Data di atas untuk referensi saja.</em></p>
+      <p><strong>X: @dvtrade_</strong> </p>
+    </div>
+</body>
+</html>
+
+    <script>
+        // Toggle Dark Mode
+        function toggleTheme() {
+            const body = document.body;
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.setAttribute('data-theme', 'light');
+                document.querySelector('button').textContent = '🌙 Dark Mode';
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                document.querySelector('button').textContent = '☀️ Light Mode';
+            }
+        }
+
+        // Tabel Interaktif
+        function filterTable() {
+            const input = document.getElementById("searchInput").value.toUpperCase();
+            const table = document.getElementById("mainTable");
+            const tr = table.getElementsByTagName("tr");
+            for (let i = 1; i < tr.length; i++) {
+                tr[i].style.display = tr[i].textContent.toUpperCase().indexOf(input) > -1 ? "" : "none";
+            }
+        }
+
+        function sortTable(n) {
+            const table = document.getElementById("mainTable");
+            let switching = true;
+            while (switching) {
+                switching = false;
+                const rows = table.rows;
+                for (let i = 1; i < (rows.length - 1); i++) {
+                    let shouldSwitch = false;
+                    const x = rows[i].getElementsByTagName("TD")[n];
+                    const y = rows[i + 1].getElementsByTagName("TD")[n];
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+                if (shouldSwitch) {
+                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                    switching = true;
+                }
+            }
+        }
+
+        // Growth % Chart
+        new Chart(document.getElementById('growthChart'), {
+            type: 'bar',
+            data: {
+                labels: ['PRDL', 'JELI', 'EMMI', 'JECX', 'RANS', 'BACH'],
+                datasets: [
+                    {
+                        label: 'Revenue Growth YoY (%)',
+                        data: [26.8, -4.5, 18.1, 10, -14, 15],
+                        backgroundColor: '#3b82f6'
+                    },
+                    {
+                        label: 'Net Income Growth YoY (%)',
+                        data: [69.9, 235.5, 188.2, 5, -42, 20],
+                        backgroundColor: '#10b981'
+                    }
+                ]
+            },
+            options: { responsive: true, plugins: { legend: { position: 'top' } } }
+        });
+
+        // Revenue Chart
+        new Chart(document.getElementById('revenueChart'), {
+            type: 'bar',
+            data: {
+                labels: ['PRDL', 'JELI', 'EMMI', 'JECX', 'RANS', 'BACH'],
+                datasets: [{
+                    label: 'Revenue 2025 (Miliar Rp)',
+                    data: [74.4, 753, 454.6, 927, 353, 1730],
+                    backgroundColor: '#3b82f6'
+                }]
+            },
+            options: { responsive: true }
+        });
+
+        // Net Income Chart
+        new Chart(document.getElementById('netIncomeChart'), {
+            type: 'bar',
+            data: {
+                labels: ['PRDL', 'JELI', 'EMMI', 'JECX', 'RANS', 'BACH'],
+                datasets: [{
+                    label: 'Net Income 2025 (Miliar Rp)',
+                    data: [17, 39, 32.4, 72.8, 56.7, 155.6],
+                    backgroundColor: '#10b981'
+                }]
+            },
+            options: { responsive: true }
+        });
+
+        // P/E Chart
+        new Chart(document.getElementById('peChart'), {
+            type: 'bar',
+            data: {
+                labels: ['PRDL', 'JELI', 'EMMI', 'JECX', 'RANS', 'BACH'],
+                datasets: [{
+                    label: 'P/E Ratio Estimasi',
+                    data: [11.3, 34.5, 22, 57.5, 45, 11.8],
+                    backgroundColor: '#8b5cf6'
+                }]
+            },
+            options: { responsive: true }
+        });
+    </script>
+</body>
+</html>
